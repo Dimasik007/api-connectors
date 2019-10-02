@@ -66,6 +66,11 @@ class BitMEXWebsocket:
         instrument = self.data['instrument'][0]
         instrument['tickLog'] = int(math.fabs(math.log10(instrument['tickSize'])))
         return instrument
+        
+    def get_liquidations(self):
+        ''' get the liquidations for this symbol'''
+        liquidations = self.data['liquidation']
+        return liquidations
 
     def get_ticker(self):
         '''Return a ticker object. Generated from quote and trade.'''
@@ -157,7 +162,7 @@ class BitMEXWebsocket:
         '''
 
         # You can sub to orderBookL2 for all levels, or orderBook10 for top 10 levels & save bandwidth
-        symbolSubs = ["execution", "instrument", "order", "orderBookL2", "position", "quote", "trade"]
+        symbolSubs = ["execution", "instrument", "order", "orderBookL2", "position", "quote", "trade", "liquidation"]
         genericSubs = ["margin"]
 
         subscriptions = [sub + ':' + self.symbol for sub in symbolSubs]
